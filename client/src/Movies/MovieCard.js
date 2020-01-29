@@ -1,4 +1,6 @@
 import React from 'react';
+import axios from 'axios';
+
 import { withRouter } from 'react-router-dom';
 
 const MovieCard = props => {
@@ -7,6 +9,14 @@ const MovieCard = props => {
   const editMovie = (e) => {
     e.preventDefault();
     props.history.push(`/update-movie/${id}`)
+  }
+
+  const handleDelete = () => {
+    axios.delete(`http://localhost:5000/api/movies/${id}`)
+    .then(res => {
+      console.log(res)
+      props.history.push(`/`)
+    })
   }
 
   return (
@@ -26,6 +36,7 @@ const MovieCard = props => {
         </div>
       ))}
       <button onClick={editMovie}>Edit Movie</button>
+      <button onClick={handleDelete}>Delete</button>
     </div>
   );
 };
